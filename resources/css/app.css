@@ -7,3 +7,95 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@keyframes market-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes market-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes market-scan {
+    0% {
+        transform: translateX(-18%);
+        opacity: 0;
+    }
+    18%,
+    72% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(118%);
+        opacity: 0;
+    }
+}
+
+@keyframes market-rise {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes market-pulse {
+    0%,
+    100% {
+        opacity: .55;
+        transform: scale(.96);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.06);
+    }
+}
+
+.animate-market-float {
+    animation: market-float 4.5s ease-in-out infinite;
+}
+
+.animate-market-draw path,
+.animate-market-draw circle,
+.animate-market-draw line,
+.animate-market-draw polyline {
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+    animation: market-draw 1.4s ease forwards;
+}
+
+.animate-market-rise {
+    animation: market-rise .7s ease both;
+}
+
+.animate-market-scan {
+    animation: market-scan 2.8s ease-in-out infinite;
+}
+
+.animate-market-pulse {
+    animation: market-pulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-market-float,
+    .animate-market-draw path,
+    .animate-market-draw circle,
+    .animate-market-draw line,
+    .animate-market-draw polyline,
+    .animate-market-rise,
+    .animate-market-scan,
+    .animate-market-pulse {
+        animation: none;
+    }
+}
