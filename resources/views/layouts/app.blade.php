@@ -6,8 +6,8 @@
         <title>{{ $title ?? config('app.name', 'Market') }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="min-h-screen bg-[#FFF7ED] text-[#1F1B16] antialiased">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <body class="min-h-screen bg-[#F7F2EA] text-[#1F1B16] antialiased">
+        <div class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
             @yield('content')
         </div>
     </body>
