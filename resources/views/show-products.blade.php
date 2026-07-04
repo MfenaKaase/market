@@ -77,6 +77,7 @@
         <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
                 <p class="text-sm uppercase tracking-[0.3em] text-[#E65800]">Products</p>
+                @include('components.searchbar')
                 <h2 class="mt-3 text-3xl font-semibold text-[#2B1F14]">All items</h2>
             </div>
             <div class="text-sm text-[#7D5A37]">Showing {{ $products->count() }} products.</div>
@@ -114,6 +115,7 @@
         'image' => $product->image_url ? asset('storage/' . $product->image_url) : null,
     ];
 @endphp
+
 
                             <button type="button"
                                     class="inline-flex items-center gap-2 bg-[#FF7A18] px-4 py-2 text-xs font-black text-white transition hover:bg-[#1F1B16]"

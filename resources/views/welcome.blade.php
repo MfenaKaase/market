@@ -96,7 +96,7 @@
         </div>
     </section>
 
-    @include('components.searchbar')
+    
 
     <section id="collections" class="space-y-6">
         <div class="flex flex-col gap-3 border-b border-[#D6C0A8] pb-5 sm:flex-row sm:items-end sm:justify-between">

@@ -40,7 +40,15 @@ Route::get('/products', function () {
     return view('show-products', compact('products'));
 })->name('products.index');
 
+Route::get('/products/search', function (Request $request) {
+    $query = $request->input('query');
+    $products = \App\Models\Product::where('name', 'like', "%$query%")->latest()->get();
+    return view('show-products', compact('products'));
+})->name('products.search');
+
 Route::post('/admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
 
 Route::delete('/admin/products/{product}/', [ProductController::class, 'delete'] )->name('admin.products.destroy');
+
+
 
