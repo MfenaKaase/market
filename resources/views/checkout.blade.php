@@ -48,6 +48,24 @@
         </div>
     </section>
 
+    @if (session('success'))
+        <div class="border border-[#1F7A3D] bg-[#ECFDF3] px-5 py-4 text-sm font-bold text-[#14532D]">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="border border-[#B42318] bg-[#FEF3F2] px-5 py-4 text-sm font-bold text-[#7A1210]">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="border border-[#B42318] bg-[#FEF3F2] px-5 py-4 text-sm font-bold text-[#7A1210]">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
     @if ($cartItems->isEmpty())
         <section class="border border-[#D6C0A8] bg-white p-8 text-center shadow-[10px_10px_0_rgba(31,27,22,0.08)]">
             <p class="text-sm font-bold uppercase tracking-[0.3em] text-[#C64E00]">Empty cart</p>
@@ -135,35 +153,52 @@
                         <h2 class="mt-2 text-2xl font-black text-[#1F1B16]">Shipping information</h2>
                     </div>
 
-                    <form action="#" method="POST" class="space-y-5 p-5">
+                    <form action="{{ route('payment.initialize') }}" method="POST" class="space-y-5 p-5">
+                        @csrf
                         <div class="grid gap-4 sm:grid-cols-2">
                             <div>
                                 <label for="full_name" class="mb-2 block text-sm font-bold text-[#6A4A2D]">Full name</label>
-                                <input id="full_name" name="full_name" type="text" placeholder="Ana Rivera" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" />
+                                <input id="full_name" name="full_name" type="text" value="{{ old('full_name', auth()->user()->name ?? '') }}" placeholder="Ana Rivera" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" required />
                             </div>
                             <div>
                                 <label for="email" class="mb-2 block text-sm font-bold text-[#6A4A2D]">Email address</label>
-                                <input id="email" name="email" type="email" placeholder="ana@example.com" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" />
+                                <input id="email" name="email" type="email" value="{{ old('email', auth()->user()->email ?? '') }}" placeholder="ana@example.com" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" required />
                             </div>
                         </div>
 
                         <div class="grid gap-4 sm:grid-cols-2">
                             <div>
                                 <label for="phone" class="mb-2 block text-sm font-bold text-[#6A4A2D]">Phone number</label>
-                                <input id="phone" name="phone" type="tel" placeholder="(555) 123-4567" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" />
+                                <input id="phone" name="phone" type="tel" value="{{ old('phone') }}" placeholder="(555) 123-4567" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" />
                             </div>
                             <div>
                                 <label for="postal_code" class="mb-2 block text-sm font-bold text-[#6A4A2D]">Postal code</label>
-                                <input id="postal_code" name="postal_code" type="text" placeholder="12345" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" />
+                                <input id="postal_code" name="postal_code" type="text" value="{{ old('postal_code') }}" placeholder="12345" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" required />
+                            </div>
+                        </div>
+
+                        <div class="grid gap-4 sm:grid-cols-2">
+                            <div>
+                                <label for="city" class="mb-2 block text-sm font-bold text-[#6A4A2D]">City</label>
+                                <input id="city" name="city" type="text" value="{{ old('city') }}" placeholder="Lagos" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" required />
+                            </div>
+                            <div>
+                                <label for="country" class="mb-2 block text-sm font-bold text-[#6A4A2D]">Country</label>
+                                <input id="country" name="country" type="text" value="{{ old('country', 'Nigeria') }}" placeholder="Nigeria" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" />
                             </div>
                         </div>
 
                         <div>
                             <label for="address" class="mb-2 block text-sm font-bold text-[#6A4A2D]">Shipping address</label>
-                            <textarea id="address" name="address" rows="4" placeholder="123 Orange Avenue, Suite 5" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]"></textarea>
+                            <textarea id="address" name="address" rows="4" placeholder="123 Orange Avenue, Suite 5" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" required>{{ old('address') }}</textarea>
                         </div>
 
-                        <button type="submit" class="w-full bg-[#FF7A18] px-6 py-4 text-base font-black text-white transition hover:bg-[#1F1B16]">Complete order</button>
+                        <div>
+                            <label for="notes" class="mb-2 block text-sm font-bold text-[#6A4A2D]">Notes</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Delivery notes or extra details" class="w-full border border-[#D6C0A8] bg-white px-4 py-3 text-sm text-[#3B2800] outline-none transition focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]">{{ old('notes') }}</textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-[#FF7A18] px-6 py-4 text-base font-black text-white transition hover:bg-[#1F1B16]">Pay with Paystack</button>
                     </form>
                 </section>
             </main>
