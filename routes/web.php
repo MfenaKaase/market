@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
@@ -124,6 +125,27 @@ Route::get('/checkout', function () {
 
     return view('checkout', compact('cartItems', 'cartTotal', 'cartQuantity'));
 })->name('checkout');
+
+Route::get('/checkout/{product}', function (\App\Models\Product $product) {
+    $quantity = $product->inventory > 0 ? 1 : 0;
+    $cartItems = collect();
+
+    if ($quantity > 0) {
+        $cartItems->push([
+            'product' => $product,
+            'quantity' => $quantity,
+            'lineTotal' => $product->price * $quantity,
+        ]);
+    }
+
+    $cartTotal = $cartItems->sum('lineTotal');
+    $cartQuantity = $cartItems->sum('quantity');
+
+    return view('checkout', compact('cartItems', 'cartTotal', 'cartQuantity'));
+});
+
+Route::post('/payment/initialize', [PaymentController::class, 'initialize'])->name('payment.initialize');
+Route::get('/payment/verify/{reference?}', [PaymentController::class, 'verify'])->name('payment.verify');
 
 Route::get('/products/search', function (Request $request) {
     $query = $request->input('query');

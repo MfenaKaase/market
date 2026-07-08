@@ -156,7 +156,7 @@
                                     <label class="sr-only" for="quantity-{{ $product->id }}">Quantity for {{ $product->name }}</label>
                                     <input id="quantity-{{ $product->id }}" type="number" name="quantity" min="1" max="{{ max(1, $product->inventory) }}" value="1" class="h-9 w-16 border border-[#D6C0A8] bg-white px-2 text-center text-xs font-black text-[#1F1B16] outline-none focus:border-[#1F1B16] focus:ring-4 focus:ring-[#FF7A1833]" {{ $product->inventory < 1 ? 'disabled' : '' }} />
                                     <button type="submit" class="inline-flex h-9 items-center justify-center bg-[#1F1B16] px-4 text-xs font-black uppercase tracking-[0.18em] text-white transition hover:bg-[#FF7A18] disabled:cursor-not-allowed disabled:bg-[#8A6B4E]" {{ $product->inventory < 1 ? 'disabled' : '' }}>
-                                        {{ $product->inventory < 1 ? 'Out' : 'Add' }}
+                                        {{ $product->inventory < 1 ? 'Out' : 'Add to cart' }}
                                     </button>
                                 </form>
                             </div>
